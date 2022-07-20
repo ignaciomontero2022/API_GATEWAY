@@ -10,8 +10,14 @@ jobs:
 
   build_imagen_a_container:
       name: Buildeo de imagen, test y publicación a AWS.
+      
       runs-on: ubuntu-latest
+      
       steps:
+      
+      - name: Checkout del codigo desde GitHub.
+        uses: actions/checkout@v3
+
       - name: Login a Docker Hub  
         uses: docker/login-action@v1
         with:
