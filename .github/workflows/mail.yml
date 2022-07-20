@@ -8,41 +8,41 @@ on:
   
 jobs:
 
-build_imagen_a_container:
-    name: Buildeo de imagen, test y publicación a AWS.
-    runs-on: ubuntu-latest
+  build_imagen_a_container:
+      name: Buildeo de imagen, test y publicación a AWS.
+      runs-on: ubuntu-latest
 
-    - name: Login a Docker Hub  
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-    
-    - name: Build de imagen.
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        push: true
-        tags: ignaciomontero2022/api_gateway:latest
-        
-    - name: Login a AWS Credentials.
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-        aws-session-token: ${{ secrets.AWS_SESION_TOKEN }}
-        aws-region: us-east-1 
-    
-    - name: Instalación de kubectl   
-      uses: azure/setup-kubectl@v2.0
-      with:
-        version: 'v1.23.6'
-        
-    - name: Cargo configuración de Kubectl..
-      uses: tale/kubectl-action@v1
-      with:
-        base64-kube-config: ${{ secrets.KUBE_CONFIG }}
-        kubectl-version: v1.23.6
-    
-    - name: Deploy de imagen a EKS. 
-      run: kubectl apply -f nginx.yaml
+      - name: Login a Docker Hub  
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Build de imagen.
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ignaciomontero2022/api_gateway:latest
+          
+      - name: Login a AWS Credentials.
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-session-token: ${{ secrets.AWS_SESION_TOKEN }}
+          aws-region: us-east-1 
+      
+      - name: Instalación de kubectl   
+        uses: azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.23.6'
+          
+      - name: Cargo configuración de Kubectl..
+        uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+          kubectl-version: v1.23.6
+      
+      - name: Deploy de imagen a EKS. 
+        run: kubectl apply -f nginx.yaml
