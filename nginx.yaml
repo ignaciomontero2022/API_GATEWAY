@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: api-gateway
-        image: #ruta de la imagen
+        image: ignaciomontero2022/api_gateway:latest
         resources:
           requests:
             memory: "500Mi"
