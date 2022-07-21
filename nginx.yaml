@@ -36,6 +36,6 @@ spec:
           limits:
             memory: "1000Mi"
             cpu: "500m"
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
